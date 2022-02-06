@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="k5pr0A" name="Flanger" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="1" displaySplashScreen="1" jucerFormatVersion="1"
+              companyName="recluse-audio" pluginName="Flanger" headerPath="C:\JUCE_Projects\JUCE_Recluse">
+  <MAINGROUP id="IGlFs5" name="Flanger">
+    <GROUP id="{914D3B7B-9CA3-DE64-5E2F-BF931D45771B}" name="Source">
+      <GROUP id="{213628C5-93CD-F895-361A-FA2ED399B829}" name="SliderComponents">
+        <FILE id="g0MUPB" name="LFOSliders.cpp" compile="1" resource="0" file="Source/LFOSliders.cpp"/>
+        <FILE id="AqwHeU" name="LFOSliders.h" compile="0" resource="0" file="Source/LFOSliders.h"/>
+      </GROUP>
+      <GROUP id="{EDAB2F18-6866-7E74-EE64-ADCAB5817E00}" name="PresetMenu">
+        <FILE id="mjC4uL" name="PresetMenu.cpp" compile="1" resource="0" file="Source/PresetMenu.cpp"/>
+        <FILE id="xqutjX" name="PresetMenu.h" compile="0" resource="0" file="Source/PresetMenu.h"/>
+      </GROUP>
+      <GROUP id="{3E9FF832-A6FC-0DE0-A833-60C2671E3899}" name="Tape Reel">
+        <FILE id="Urzy6e" name="TapeReel.h" compile="0" resource="0" file="Source/TapeReel.h"/>
+        <FILE id="RSlgSL" name="TapeReel.cpp" compile="1" resource="0" file="Source/TapeReel.cpp"/>
+      </GROUP>
+      <GROUP id="{D86F18BB-D337-EA67-6E1D-A34ADEB267DA}" name="Delay">
+        <FILE id="MUTyLn" name="DelayBase.h" compile="0" resource="0" file="Source/DelayBase.h"/>
+      </GROUP>
+      <GROUP id="{85190B75-419A-726D-2B04-2EA4D934200B}" name="LookNFeel">
+        <FILE id="rcx4bV" name="MenuFeel.cpp" compile="1" resource="0" file="Source/MenuFeel.cpp"/>
+        <FILE id="DdCjcZ" name="MenuFeel.h" compile="0" resource="0" file="Source/MenuFeel.h"/>
+        <FILE id="ruOQFO" name="MixFeel.cpp" compile="1" resource="0" file="Source/MixFeel.cpp"/>
+        <FILE id="aQnYgt" name="MixFeel.h" compile="0" resource="0" file="Source/MixFeel.h"/>
+      </GROUP>
+      <GROUP id="{1CEE8BD2-5F26-46E8-D60B-4FB714CAA36B}" name="Editor">
+        <FILE id="NV73cE" name="PluginEditor.cpp" compile="1" resource="0"
+              file="Source/PluginEditor.cpp"/>
+        <FILE id="P41CF9" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      </GROUP>
+      <GROUP id="{DB4FE1CF-26FF-2DAC-C1E1-9B0CD61E3CA6}" name="Processor">
+        <FILE id="P24wRP" name="PluginProcessor.cpp" compile="1" resource="0"
+              file="Source/PluginProcessor.cpp"/>
+        <FILE id="zhhbRr" name="PluginProcessor.h" compile="0" resource="0"
+              file="Source/PluginProcessor.h"/>
+      </GROUP>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2019 targetFolder="Builds/VisualStudio2019">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Flanger"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Flanger"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
