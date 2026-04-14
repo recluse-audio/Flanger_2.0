@@ -9,12 +9,13 @@
 */
 
 #include <JuceHeader.h>
+#include <BinaryData.h>
 #include "Components/TapeReel.h"
 
 //==============================================================================
 TapeReel::TapeReel(FlangerAudioProcessor& p, int index) : audioProcessor(p), reelIndex(index)
 {
-    image = juce::ImageFileFormat::loadFrom(juce::File("C:/ProgramData/Recluse-Audio/Flanger/Images/FlangerTape.png"));
+    image = juce::ImageCache::getFromMemory(BinaryData::FlangerTape_png, BinaryData::FlangerTape_pngSize);
     phaseIncrement = juce::MathConstants<float>::twoPi / 180.f;
 }
 

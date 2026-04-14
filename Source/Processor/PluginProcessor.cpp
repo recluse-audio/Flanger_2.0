@@ -301,9 +301,9 @@ void FlangerAudioProcessor::updateParameters()
   //  smoothDelay.setTargetValue(*apvts.getRawParameterValue("Delay Time"));
 }
 
-juce::String& FlangerAudioProcessor::getParamName()
+juce::String FlangerAudioProcessor::getParamName()
 {
-    return juce::String("");
+    return {};
 }
 
 void FlangerAudioProcessor::flangePress(float normalizedPressure, int reelIndex)

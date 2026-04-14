@@ -11,7 +11,7 @@ _deps/
 # Build directory (keep .gitkeep)
 BUILD/*
 !BUILD/.gitkeep
-
+HELPER_SCRIPTS/__pycache__/
 # Installation artifacts
 Install/*
 

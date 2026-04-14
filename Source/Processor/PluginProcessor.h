@@ -60,7 +60,7 @@ public:
     void loadPreset(StringRef presetPath);
 
     void updateParameters();
-    juce::String& getParamName();
+    juce::String getParamName();
 
     float getDelay(int reelIndex) 
     { 
