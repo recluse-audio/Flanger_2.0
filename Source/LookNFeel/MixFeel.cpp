@@ -9,7 +9,7 @@
  ==============================================================================
  */
 
-#include "MixFeel.h"
+#include "LookNFeel/MixFeel.h"
 
 MixFeel::MixFeel()
 {

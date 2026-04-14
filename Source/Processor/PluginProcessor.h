@@ -9,7 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "DelayBase.h"
+#include "Processor/DelayBase.h"
 //==============================================================================
 /**
 */

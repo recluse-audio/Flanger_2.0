@@ -6,8 +6,8 @@
   ==============================================================================
 */
 
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "Processor/PluginProcessor.h"
+#include "Components/PluginEditor.h"
 
 //==============================================================================
 FlangerAudioProcessorEditor::FlangerAudioProcessorEditor(FlangerAudioProcessor& p)

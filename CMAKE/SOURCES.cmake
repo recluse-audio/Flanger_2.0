@@ -1,0 +1,19 @@
+set(SOURCES
+    SOURCE/Components/LFOSliders.cpp
+    SOURCE/Components/LFOSliders.h
+    SOURCE/Components/PluginEditor.cpp
+    SOURCE/Components/PluginEditor.h
+    SOURCE/Components/PresetMenu.cpp
+    SOURCE/Components/PresetMenu.h
+    SOURCE/Components/TapeReel.cpp
+    SOURCE/Components/TapeReel.h
+    SOURCE/LookNFeel/MenuFeel.cpp
+    SOURCE/LookNFeel/MenuFeel.h
+    SOURCE/LookNFeel/MixFeel.cpp
+    SOURCE/LookNFeel/MixFeel.h
+    SOURCE/Processor/DelayBase.h
+    SOURCE/Processor/PluginProcessor.cpp
+    SOURCE/Processor/PluginProcessor.h
+    SOURCE/Util/Version.h
+    SOURCE/Util/WaveTable.h
+)

@@ -9,7 +9,7 @@
 */
 
 #include <JuceHeader.h>
-#include "TapeReel.h"
+#include "Components/TapeReel.h"
 
 //==============================================================================
 TapeReel::TapeReel(FlangerAudioProcessor& p, int index) : audioProcessor(p), reelIndex(index)

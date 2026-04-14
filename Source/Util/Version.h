@@ -1,0 +1,5 @@
+#pragma once
+#define BUILD_VERSION_MAJOR 0
+#define BUILD_VERSION_MINOR 0
+#define BUILD_VERSION_PATCH 1
+#define BUILD_VERSION_STRING "0.0.1"

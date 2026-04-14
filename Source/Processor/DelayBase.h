@@ -10,7 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include <WaveTables/WaveTable.h>
+#include "Util/WaveTable.h"
 
 class DelayBase
 {

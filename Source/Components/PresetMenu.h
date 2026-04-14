@@ -11,8 +11,8 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "PluginProcessor.h"
-#include "MenuFeel.h"
+#include "Processor/PluginProcessor.h"
+#include "LookNFeel/MenuFeel.h"
 
 //==============================================================================
 /*

@@ -9,11 +9,11 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "PluginProcessor.h"
-#include "MixFeel.h"
-#include "TapeReel.h"
-#include "PresetMenu.h"
-#include "LFOSliders.h"
+#include "Processor/PluginProcessor.h"
+#include "LookNFeel/MixFeel.h"
+#include "Components/TapeReel.h"
+#include "Components/PresetMenu.h"
+#include "Components/LFOSliders.h"
 //==============================================================================
 /**
 */

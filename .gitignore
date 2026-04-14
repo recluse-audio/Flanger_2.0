@@ -1,2 +1,51 @@
-**/Builds
-**/JuceLibraryCode
+# CMake artifacts
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Build directory (keep .gitkeep)
+BUILD/*
+!BUILD/.gitkeep
+
+# Installation artifacts
+Install/*
+
+# IDE configurations
+.idea/
+.vscode/
+cmake-build-*/
+.DS_Store
+
+# Packaging output
+packaging/Output/*
+
+# VS Code workspace (optional - comment out if you want to track it)
+*.code-workspace
+
+# Projucer artifacts
+*.jucer
+Builds/
+JuceLibraryCode/
+
+# Visual Studio
+.vs/
+out/
+*.user
+*.suo
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# Xcode
+*.xcodeproj/
+*.xcworkspace/
+DerivedData/
+
+# Operating system
+.DS_Store
+Thumbs.db
