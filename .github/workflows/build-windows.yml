@@ -1,0 +1,57 @@
+name: Build Windows
+
+on:
+  workflow_dispatch:
+    inputs:
+      config:
+        description: 'Build configuration'
+        required: false
+        default: 'Release'
+        type: choice
+        options:
+          - Release
+          - Debug
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Configure
+        run: |
+          cmake -S . -B BUILD -DCMAKE_BUILD_TYPE=${{ github.event.inputs.config || 'Release' }}
+
+      - name: Build VST3
+        run: |
+          cmake --build BUILD --target Flanger2_VST3 --config ${{ github.event.inputs.config || 'Release' }}
+
+      - name: Build Standalone
+        run: |
+          cmake --build BUILD --target Flanger2_Standalone --config ${{ github.event.inputs.config || 'Release' }}
+
+      - name: Package bundles
+        shell: pwsh
+        run: |
+          $config = "${{ github.event.inputs.config || 'Release' }}"
+          Compress-Archive -Path "BUILD/Flanger2_artefacts/$config/VST3/Flanger 2.vst3" -DestinationPath "Flanger2-Windows-VST3.zip"
+          Compress-Archive -Path "BUILD/Flanger2_artefacts/$config/Standalone/Flanger 2.exe" -DestinationPath "Flanger2-Windows-Standalone.zip"
+
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flanger2-Windows-VST3
+          path: Flanger2-Windows-VST3.zip
+
+      - name: Upload Standalone
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flanger2-Windows-Standalone
+          path: Flanger2-Windows-Standalone.zip

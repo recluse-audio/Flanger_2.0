@@ -1,0 +1,78 @@
+name: Build macOS x86_64
+
+on:
+  workflow_dispatch:
+    inputs:
+      config:
+        description: 'Build configuration'
+        required: false
+        default: 'Release'
+        type: choice
+        options:
+          - Release
+          - Debug
+
+jobs:
+  build:
+    runs-on: macos-15  # ARM runner cross-compiling for x86_64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install CMake
+        run: brew install cmake
+
+      - name: Configure
+        run: |
+          cmake -S . -B BUILD \
+            -G Xcode \
+            -DCMAKE_OSX_ARCHITECTURES=x86_64
+
+      - name: Build VST3
+        run: |
+          cmake --build BUILD --target Flanger2_VST3 \
+            --config ${{ github.event.inputs.config || 'Release' }}
+
+      - name: Build AU
+        run: |
+          cmake --build BUILD --target Flanger2_AU \
+            --config ${{ github.event.inputs.config || 'Release' }}
+
+      - name: Build Standalone
+        run: |
+          cmake --build BUILD --target Flanger2_Standalone \
+            --config ${{ github.event.inputs.config || 'Release' }}
+
+      - name: Package bundles
+        run: |
+          CONFIG=${{ github.event.inputs.config || 'Release' }}
+          ditto -c -k --sequesterRsrc --keepParent \
+            "BUILD/Flanger2_artefacts/$CONFIG/VST3/Flanger 2.vst3" \
+            "Flanger2-macOS-x86_64-VST3.zip"
+          ditto -c -k --sequesterRsrc --keepParent \
+            "BUILD/Flanger2_artefacts/$CONFIG/AU/Flanger 2.component" \
+            "Flanger2-macOS-x86_64-AU.zip"
+          ditto -c -k --sequesterRsrc --keepParent \
+            "BUILD/Flanger2_artefacts/$CONFIG/Standalone/Flanger 2.app" \
+            "Flanger2-macOS-x86_64-Standalone.zip"
+
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flanger2-macOS-x86_64-VST3
+          path: Flanger2-macOS-x86_64-VST3.zip
+
+      - name: Upload AU
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flanger2-macOS-x86_64-AU
+          path: Flanger2-macOS-x86_64-AU.zip
+
+      - name: Upload Standalone
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flanger2-macOS-x86_64-Standalone
+          path: Flanger2-macOS-x86_64-Standalone.zip
