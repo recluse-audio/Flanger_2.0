@@ -11,7 +11,8 @@ _deps/
 # Build directory (keep .gitkeep)
 BUILD/*
 !BUILD/.gitkeep
-HELPER_SCRIPTS/__pycache__/
+__pycache__/
+*.pyc
 # Installation artifacts
 Install/*
 
@@ -45,6 +46,16 @@ out/
 *.xcodeproj/
 *.xcworkspace/
 DerivedData/
+
+# Signed build output
+SIGNED/PC/OUTPUT/
+SIGNED/MAC/OUTPUT/
+
+# Installer build output
+INSTALLERS/PC/BUILD/
+
+# Release packages
+RELEASE/
 
 # Operating system
 .DS_Store

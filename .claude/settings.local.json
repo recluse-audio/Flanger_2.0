@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git -C /c/REPOS/PLUGIN_PROJECTS/Flanger_2.0 log --oneline)"
+      "Bash(git -C /c/REPOS/PLUGIN_PROJECTS/Flanger_2.0 log --oneline)",
+      "Read(//c/REPOS/PLUGIN_PROJECTS//**)",
+      "Read(//c/REPOS//**)",
+      "Bash(git:*)"
     ]
   }
 }

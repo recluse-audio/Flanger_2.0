@@ -1,7 +1,28 @@
 #!/usr/bin/env python3
+"""
+Cross-platform CMake build script (macOS / Windows / Linux).
+
+Builds ALL available plugin formats for the current platform:
+  - Standalone (all platforms)
+  - VST3       (all platforms)
+  - AU         (macOS only)
+
+Usage examples:
+  python rebuild_all.py
+  python rebuild_all.py --config Release
+  python rebuild_all.py --build-dir BUILD --generator "Ninja" --clean
+"""
+
 from __future__ import annotations
-import argparse, shutil, subprocess, sys
+
+import argparse
+import os
+import shutil
+import stat
+import subprocess
+import sys
 from pathlib import Path
+
 from build_complete import find_cmake, beep
 
 PLUGIN_NAME = "Flanger2"
@@ -12,7 +33,20 @@ def run(cmd: list[str], cwd: Path | None = None) -> None:
     subprocess.run(cmd, cwd=str(cwd) if cwd else None, check=True)
 
 
+def rmtree(path: Path) -> None:
+    """Delete a directory tree, clearing read-only bits first (required on Windows for git objects)."""
+    def _clear_readonly(func, fpath, _exc):
+        os.chmod(fpath, stat.S_IWRITE)
+        func(fpath)
+
+    if sys.version_info >= (3, 12):
+        shutil.rmtree(path, onexc=_clear_readonly)
+    else:
+        shutil.rmtree(path, onerror=_clear_readonly)
+
+
 def regenerate_cmake_lists() -> None:
+    """Regenerate CMAKE/SOURCES.cmake and CMAKE/TESTS.cmake from directory scan."""
     regen_script = Path(__file__).parent / "regenSource.py"
     if regen_script.exists():
         print("Regenerating CMake file lists...")
@@ -28,16 +62,30 @@ def is_multi_config_generator(gen: str | None) -> bool:
     return ("visual studio" in g) or ("xcode" in g) or ("multi-config" in g)
 
 
+def get_targets() -> list[str]:
+    """Return the list of plugin format targets to build for the current platform.
+
+    The shared code target must be first — all format targets link against it.
+    """
+    targets = [
+        f"{PLUGIN_NAME}",           # shared code lib — must build first
+        f"{PLUGIN_NAME}_Standalone",
+        f"{PLUGIN_NAME}_VST3",
+    ]
+    if sys.platform == "darwin":
+        targets.append(f"{PLUGIN_NAME}_AU")
+    return targets
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source-dir", default=".")
-    ap.add_argument("--build-dir", default="BUILD")
-    ap.add_argument("--target", default=PLUGIN_NAME)
-    ap.add_argument("--config", default=None)
-    ap.add_argument("--clean", action="store_true")
-    ap.add_argument("--generator", default=None)
-    ap.add_argument("--parallel", type=int, default=0)
-    ap.add_argument("--verbose", action="store_true")
+    ap.add_argument("--source-dir", default=".", help="CMake source dir (default: .)")
+    ap.add_argument("--build-dir", default="BUILD", help="Build dir (default: BUILD)")
+    ap.add_argument("--config", default=None, help="Build config (Debug/Release/etc).")
+    ap.add_argument("--clean", action="store_true", help="Delete build dir before configuring.")
+    ap.add_argument("--generator", default=None, help='CMake generator.')
+    ap.add_argument("--parallel", type=int, default=0, help="Parallel jobs (0 = let CMake decide).")
+    ap.add_argument("--verbose", action="store_true", help="Enable verbose build output.")
     args, unknown = ap.parse_known_args()
 
     src_dir = Path(args.source_dir).resolve()
@@ -48,26 +96,36 @@ def main() -> int:
     regenerate_cmake_lists()
 
     if args.clean and bld_dir.exists():
-        shutil.rmtree(bld_dir)
+        rmtree(bld_dir)
     bld_dir.mkdir(parents=True, exist_ok=True)
 
+    gen = args.generator
+    multi = is_multi_config_generator(gen)
+
     cfg_cmd = [cmake, "-S", str(src_dir), "-B", str(bld_dir)]
-    if args.generator:
-        cfg_cmd += ["-G", args.generator]
+    if gen:
+        cfg_cmd += ["-G", gen]
+    if not multi and not sys.platform.startswith("win"):
+        cfg_cmd += [f"-DCMAKE_BUILD_TYPE={args.config or 'Release'}"]
     cfg_cmd += unknown
     run(cfg_cmd)
 
-    build_cmd = [cmake, "--build", str(bld_dir), "--target", args.target]
-    multi = is_multi_config_generator(args.generator)
-    if sys.platform.startswith("win"):
-        build_cmd += ["--config", args.config or "Debug"]
-    elif args.config or multi:
-        build_cmd += ["--config", args.config or "Debug"]
-    if args.parallel > 0:
-        build_cmd += ["-j", str(args.parallel)]
-    if args.verbose:
-        build_cmd += ["--verbose"]
-    run(build_cmd)
+    targets = get_targets()
+    print(f"\nBuilding targets: {', '.join(targets)}\n")
+
+    for target in targets:
+        build_cmd = [cmake, "--build", str(bld_dir), "--target", target]
+        if sys.platform.startswith("win"):
+            build_cmd += ["--config", args.config or "Debug"]
+        elif multi:
+            build_cmd += ["--config", args.config or "Release"]
+        if args.parallel > 0:
+            build_cmd += ["-j", str(args.parallel)]
+        if args.verbose:
+            build_cmd += ["--verbose"]
+        run(build_cmd)
+
+    print(f"\nAll targets built successfully.")
     return 0
 
 
